@@ -1,10 +1,11 @@
 package com.duckrace;
 
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
+
+import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
+
 
 /*
  * This is a lookup table of ids to student names.
@@ -41,41 +42,74 @@ import java.nio.file.Files;
 
 class Board {
     private final Map<Integer,String> studentIdMap = loadStudentIdMap();
-    private final Map<Integer,DuckRacer> racerMap  = null;
+    private final Map<Integer,DuckRacer> racerMap = new TreeMap<>();
 
+
+    // TESTING PURPOSES
+    void dumpStudentIdMap(){
+        System.out.println(studentIdMap);
+    }
+
+
+    /*
+     * This shows the data to the human user
+     * We need to show the right side of the map, Ideally in an attractive way
+     */
+
+
+
+
+    public void show(){
+        Collection<DuckRacer> racers = racerMap.values();
+
+        System.out.println("id   name    wins    rewards");
+        System.out.println("--   ----    ----   -------" );
+        for (DuckRacer racer : racers) {
+            System.out.printf("%s   %s    %s      %s\n",
+                    + racer.getId(), racer.getName(), racer.getWins(), racer.getRewards());
+        }
+    }
+
+
+    /*
+     * Update the board (racerMap) by making a DuckRacer win.
+     * This could mean fetching an existing DuckR acer from the racerMap
+     * or we might need to create a new DuckRacer, put it in the map, and then make it win
+     * Either way, it needs to win!
+     */
     public void update(int id, Reward reward){
-        if (racerMap.containsKey(id)){
+        if (racerMap.containsKey(id)) { // fetch existing DuckRacer
             DuckRacer racer = racerMap.get(id);
             racer.win(reward);
         }
-        else {
-            DuckRacer racer = new DuckRacer(id,studentIdMap.get(id));
-            racerMap.put(id, racer);
+        else {                      // create new DuckRacer
+            DuckRacer racer = new DuckRacer(id, studentIdMap.get(id));
+            racerMap.put(id,racer);
             racer.win(reward);
         }
     }
 
-    void dumpRacerMap(){
-        System.out.println();
-    }
-//
-//    void dumpStudentIdMap(){
-//        System.out.println();
-//    }
 
-    private Map<Integer,String> loadStudentIdMap() {
+    /*
+     * Populates studentID Map from file conf/student-ids.csv
+     */
+
+    private Map<Integer, String> loadStudentIdMap() {
         Map<Integer,String> map = new HashMap<>();
+
         try {
-            List<String> lines = Files.readAllLines(Path.of("conf/student-ids.cvs"));
-            for (String line: lines){
+            List<String> lines = Files.readAllLines(Path.of("conf/student-ids.csv"));
+            // for each line (String), we need to split it into "tokens" based on the comma
+            for(String line : lines) {
                 String[] tokens = line.split(",");
                 Integer id = Integer.valueOf(tokens[0]);
                 String name = tokens[1];
-                map.put(id,name);
+                map.put(id, name);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
+
         return map;
     }
 }

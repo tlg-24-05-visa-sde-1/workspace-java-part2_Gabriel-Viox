@@ -60,13 +60,20 @@ class Board {
 
 
     public void show(){
-        Collection<DuckRacer> racers = racerMap.values();
+        if(racerMap.isEmpty()){
+            System.out.println("No Current results to show");
+            System.out.println();
+        }
+        else {
+            Collection<DuckRacer> racers = racerMap.values();
 
-        System.out.println("id   name    wins    rewards");
-        System.out.println("--   ----    ----   -------" );
-        for (DuckRacer racer : racers) {
-            System.out.printf("%s   %s    %s      %s\n",
-                    + racer.getId(), racer.getName(), racer.getWins(), racer.getRewards());
+            System.out.println("id   name    wins    rewards");
+            System.out.println("--   ----    ----    -------" );
+
+            for (DuckRacer racer : racers) {
+                System.out.printf("%s   %s    %s      %s\n",
+                        + racer.getId(), racer.getName(), racer.getWins(), racer.getRewards());
+            }
         }
     }
 
@@ -78,15 +85,16 @@ class Board {
      * Either way, it needs to win!
      */
     public void update(int id, Reward reward){
+        DuckRacer racer = null;
+
         if (racerMap.containsKey(id)) { // fetch existing DuckRacer
-            DuckRacer racer = racerMap.get(id);
             racer.win(reward);
         }
         else {                      // create new DuckRacer
-            DuckRacer racer = new DuckRacer(id, studentIdMap.get(id));
+            racer = new DuckRacer(id, studentIdMap.get(id));
             racerMap.put(id,racer);
-            racer.win(reward);
         }
+        racer.win(reward);
     }
 
 

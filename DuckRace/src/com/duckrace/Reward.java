@@ -1,6 +1,6 @@
 package com.duckrace;
 
-enum Reward {
+public enum Reward {
     DEBIT_CARD, PRIZES;
 
 }

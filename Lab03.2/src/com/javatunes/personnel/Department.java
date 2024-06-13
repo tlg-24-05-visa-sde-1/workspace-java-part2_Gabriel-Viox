@@ -10,6 +10,7 @@ package com.javatunes.personnel;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.function.Consumer;
 
 public class Department {
     private String name;
@@ -25,15 +26,17 @@ public class Department {
     }
 
     public void listEmployees() {
-        for (Employee emp : employees) {
-            System.out.println(emp);
-        }
+        employees.forEach(emp-> System.out.println(emp));
+//        for (Employee emp : employees) {
+//            System.out.println(emp);
+//        }
     }
 
     public void workEmployees() {
-        for (Employee emp : employees) {
-            emp.work();
-        }
+        employees.forEach(emp -> emp.work());
+//        for (Employee emp : employees) {
+//            emp.work();
+//        }
     }
 
     /**
@@ -42,9 +45,10 @@ public class Department {
      */
     public void payEmployees() {
         // DONE
-        for (Employee emp : employees) {
-            emp.pay();
-        }
+        employees.forEach(emp -> emp.pay());
+//        for (Employee emp : employees) {
+//            emp.pay();
+//        }
     }
 
     // helper method to add an Employee to the collection

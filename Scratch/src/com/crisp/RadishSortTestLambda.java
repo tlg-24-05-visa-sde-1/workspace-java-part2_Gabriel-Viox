@@ -3,7 +3,8 @@ package com.crisp;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-class RadishSortTest {
+
+class RadishSortTestLambda {
 
     public static void main(String[] args) {
         List<Radish> radishes = new ArrayList<>();
@@ -24,13 +25,11 @@ class RadishSortTest {
         dump(radishes);
 
         System.out.println("Sort by color via Comparator class");
-        radishes.sort(new Comparator<Radish>() {
-            @Override
-            public int compare(Radish r1, Radish r2) {
-                return CharSequence.compare(r1.getColor(),r2.getColor());
-            }
-        });
+        radishes.sort((r1,r2) -> r1.getColor().compareTo(r2.getColor()));
         dump(radishes);
+
+        System.out.println("sort by buy number of sprouts");
+        radishes.sort((r1, r2) -> Integer.compare(r1.getSprouts(),(r2.getSprouts())));
 
         System.out.println("sort by Sprouts via RadishSproutComparator");
         radishes.sort((r1, r2) -> Double.compare(r1.getTailLength(), r2.getTailLength()));

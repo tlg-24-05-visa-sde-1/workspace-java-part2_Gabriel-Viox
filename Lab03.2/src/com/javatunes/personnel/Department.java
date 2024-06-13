@@ -26,14 +26,14 @@ public class Department {
     }
 
     public void listEmployees() {
-        employees.forEach(emp-> System.out.println(emp));
+        employees.forEach(System.out::println);
 //        for (Employee emp : employees) {
 //            System.out.println(emp);
 //        }
     }
 
     public void workEmployees() {
-        employees.forEach(emp -> emp.work());
+        employees.forEach(Employee::work);
 //        for (Employee emp : employees) {
 //            emp.work();
 //        }
@@ -45,7 +45,7 @@ public class Department {
      */
     public void payEmployees() {
         // DONE
-        employees.forEach(emp -> emp.pay());
+        employees.forEach(Employee::pay);
 //        for (Employee emp : employees) {
 //            emp.pay();
 //        }

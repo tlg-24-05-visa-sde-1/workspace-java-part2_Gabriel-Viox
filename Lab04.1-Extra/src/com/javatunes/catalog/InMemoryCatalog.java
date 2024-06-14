@@ -132,6 +132,17 @@ public class InMemoryCatalog implements Catalog {
      * For example, Madonna's first album is simply titled, "Madonna."
      */
 
+    public Collection<MusicItem> findSelfTitle(){
+        Collection<MusicItem> result = new ArrayList<>();
+
+        for(MusicItem item : catalogData) {
+            if( item.getArtist().equals(item.getTitle())) {
+                result.add(item);
+            }
+        }
+        return result;
+    }
+
 
     /**
      * TASK: find all "rock" items whose price is less than or equal to the specified price.
@@ -158,9 +169,11 @@ public class InMemoryCatalog implements Catalog {
     /**
      * TASK: determine average price of our low-cost, extensive catalog of music.
      */
-    public double averagePrice(){
-        return 0.0;
-    }
+//    public double averagePrice(){
+//        Collection<MusicItem> result = new ArrayList<>();
+//
+//        return result;
+//    }
 
     /**
      * TASK: find the cheapest item with the specified genre (MusicCategory).

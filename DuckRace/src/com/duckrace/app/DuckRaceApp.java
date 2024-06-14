@@ -11,7 +11,7 @@ import static com.duckrace.Reward.*;
  * and prompts user for inputs, then passes those inputs into the system
  */
 public class DuckRaceApp {
-     private final Board board = new Board();
+     private final Board board = Board.getInstance();
      private final Scanner scanner = new Scanner(System.in);
 
      //programming by intention
@@ -23,6 +23,7 @@ public class DuckRaceApp {
         Reward reward = promptForReward();
         updateBoard(id, reward);
         showBoard();
+        board.save();
      }
 
     private void updateBoard(int id, Reward reward) {

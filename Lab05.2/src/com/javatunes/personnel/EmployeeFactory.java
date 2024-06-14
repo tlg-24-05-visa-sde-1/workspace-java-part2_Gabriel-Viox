@@ -18,13 +18,30 @@ public class EmployeeFactory {
     }
 
     /**
-     * TODO: given the input map, create and return the correct object (with its properties set).
+     * given the input map, create and return the correct object (with its properties set).
      * If the input map's "type" value is not "HE" or "SE", throw IllegalArgumentException with a suitable message.
      */
-    public static Employee createEmployee(Map<String,String> inputMap) throws IllegalArgumentException {
+    public static Employee createEmployee(Map<String,String> inputMap)
+            throws IllegalArgumentException {
         // return value
         Employee emp = null;
+        // First extract the indicator from the Map "HE" or "SE"
+        String type = inputMap.get("type");
+        String name = inputMap.get("name");
+        Date hireDate = Date.valueOf(inputMap.get("hireDate"));
+        if ("HE".equals(type)){
+            Double rate = Double.valueOf(inputMap.get("rate"));
+            Double hours = Double.valueOf(inputMap.get("hours"));
+            emp = new HourlyEmployee(name,hireDate,rate,hours);
+        }
+        else if ("SE".equals(type)) {
+            Double salary = Double.valueOf(inputMap.get("salary"));
+            emp = new SalariedEmployee(name, hireDate,salary);
 
+        }
+        else {
+            throw new IllegalArgumentException("Invalid type:" + type + ". " + "Valid types are HE and SE.");
+        }
         return emp;
     }
 }
